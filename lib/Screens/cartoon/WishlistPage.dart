@@ -125,13 +125,17 @@ class _WishlistPageState extends State<WishlistPage> {
                           return GestureDetector(
                               onTap: () {
                                 jokeProvider.currentIndex = index;
+                                final emoji = jokeProvider.jokeListFav.keys.elementAt(selectedIndex);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => JokeCard(
-                                              jokeModel: jokeData,
+                                        builder: (context) {
+                                          return JokeCard(
                                               isFav: true,
-                                            )));
+                                          index: index,
+                                          emoji: emoji,
+                                            );
+                                        }));
                               },
                               child: ListCardContainer(
                                 index: index,

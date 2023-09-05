@@ -33,12 +33,13 @@ String findKeyForJoke(Map<String, List<JokeModel>> jokeListFav, JokeModel jokeTo
 }
 
 final _controller = GlobalKey<PageFlipWidgetState>();
-var selectedEmoji = '';
-int selectedIndex=0;
 
 class _ComicWishlistPageState extends State<ComicWishlistPage> {
+  var selectedEmoji = '';
+  int selectedIndex=0;
   @override
   Widget build(BuildContext context) {
+    print("selectedIndex is: $selectedIndex");
     JokeProvider jokeProvider = Provider.of<JokeProvider>(context, listen: false);
     return  Scaffold(
       body: jokeProvider.jokeListFav.values.elementAt(selectedIndex).length==0?
@@ -146,14 +147,14 @@ class _ComicWishlistPageState extends State<ComicWishlistPage> {
           index: index,
           children:[
             for(int i=0;i<jokeProvider.jokeListFav.values.elementAt(selectedIndex).length;i++)
-              pages(i,selectedIndex)
+              pages(i)
           ]
 
       ),
     );
   }
   Random random = Random();
-  Widget pages(int index,int selectedIndex)
+  Widget pages(int index)
   {
     int randomNumber = random.nextInt(9);
     return Consumer<JokeProvider>(

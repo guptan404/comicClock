@@ -12,7 +12,7 @@ class JokeProvider with ChangeNotifier {
   Map<String, List<JokeModel>> jokeListFav = {"😀 All": []};
 
   JokeService jokeService = JokeService();
-  bool isAsc = true;
+  bool isAsc = false;
   int currentIndex = 0;
   int curentStreak = 0;
 
@@ -110,6 +110,7 @@ class JokeProvider with ChangeNotifier {
       if(jokeListFav.containsKey(emojiTag))
       {
         jokeListFav[emojiTag]?.add(jokeModel);
+        //remove duplicates from list by comparing ids
       }
       else
       {
@@ -126,9 +127,12 @@ class JokeProvider with ChangeNotifier {
       for (int i = 0; i < count; i++) {
         print("i is $i");
         var value = await jokeService.getJoke();
-          if(isAsc){
-            jokeList.reversed.toList();
-          }
+        // print("isAsc is $isAsc");
+        // print("jokeList is ${jokeList.first.id}");
+          // if(isAsc){
+          //   jokeList.reversed.toList();
+          // }
+          // print("jokeList is ${jokeList.first.id}");
           if(jokeList.length == 10)
           {
             jokeList.removeAt(9);
@@ -153,9 +157,9 @@ class JokeProvider with ChangeNotifier {
           //add joke to starting of the list
           jokeList.insert(0, value);
           //update the shared preferences
-          if(isAsc){
-            jokeList.reversed.toList();
-          }
+          // if(isAsc){
+          //   jokeList.reversed.toList();
+          // }
           sharedPreferences.setString("jokeList", jsonEncode(jokeList));
           notifyListeners();
       }
@@ -199,7 +203,7 @@ class JokeProvider with ChangeNotifier {
 
 
   void reverseList() {
-    jokeList = jokeList.reversed.toList();
+    // jokeList = jokeList.reversed.toList();
     notifyListeners();
   }
 }

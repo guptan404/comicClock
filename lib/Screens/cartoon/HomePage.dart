@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
                           child: Padding(
                             padding: const EdgeInsets.only(top:0,left: 12.0,right: 12.0),
                             child: ListView.builder(
+                              reverse: jokeProvider.isAsc,
                               itemCount: jokeProvider.jokeList.length,
                               itemBuilder: (context, index) {
                                 final jokeData = jokeProvider.jokeList[index];
@@ -61,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                                 return GestureDetector(
                                   onTap: (){
                                     jokeProvider.currentIndex=index;
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => JokeCard(jokeModel:jokeProvider.jokeList[index],isFav: false,)));},
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => JokeCard(isFav: false,index: index,emoji: "",)));},
                                   child: ListCardContainer(
                                     jokeModel: jokeData,
                                    index: index,

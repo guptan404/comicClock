@@ -12,9 +12,10 @@ import '../../Widgets/EmojiContainer.dart';
 
 class JokeCard extends StatefulWidget {
   final bool isFav;
-  JokeModel jokeModel;
+  int index;
+  String emoji;
 
-   JokeCard({required this.isFav,Key? key,required this.jokeModel}) : super(key: key);
+   JokeCard({required this.isFav,Key? key,required this.index,required this.emoji}) : super(key: key);
 
   @override
   State<JokeCard> createState() => _JokeCardState();
@@ -43,13 +44,19 @@ class _JokeCardState extends State<JokeCard> {
   @override
   Widget build(BuildContext context) {
 
-    JokeProvider jokeProvider = Provider.of<JokeProvider>(context,listen: false);
-    if (jokeProvider.currentIndex != null && jokeProvider.jokeList != null &&
-        jokeProvider.currentIndex < jokeProvider.jokeList.length) {
       return Consumer<JokeProvider>(
           builder: (_, jokeProvider, __) {
-            final currentIndex = jokeProvider.currentIndex;
-            List<JokeModel>()=jokeProvider.extractAllJokes();
+            // final currentIndex = jokeProvider.currentIndex;
+            JokeModel jokeModel;
+            if(widget.emoji=="") {
+               jokeModel = jokeProvider.jokeList[widget.index];
+            }
+            else
+              {
+                 jokeModel = jokeProvider.jokeListFav[widget.emoji]![widget.index];
+              }
+            // List<JokeModel>()=jokeProvider.extractAllJokes();
+
 
             return Scaffold(
                 resizeToAvoidBottomInset:false,
@@ -73,13 +80,13 @@ class _JokeCardState extends State<JokeCard> {
                                 Visibility(
                                   //replacement: SizedBox.expand(),
                                   visible: jokeProvider.isEmojiListVisible,
-                                    child: EmojiListContainer(context,currentIndex)),
+                                    child: EmojiListContainer(context,widget.index)),
                               ],
                             ),
                           ),
                           SizedBox(height: 20,),
                           CardContainer(
-                            context, currentIndex , widget.jokeModel ??JokeModel() , widget.isFav,),
+                            context, widget.index , jokeModel ??JokeModel() , widget.isFav,),
                           SizedBox(height: 25,),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -91,11 +98,10 @@ class _JokeCardState extends State<JokeCard> {
                                       setState(() {
 
                                       });
-                                      final newIndex = jokeProvider.jokeList.indexOf(widget.jokeModel) - 1;
+                                      final newIndex = widget.index - 1;
 
                                       if (newIndex >= 0) {
-                                        jokeProvider.currentIndex = newIndex;
-                                        widget.jokeModel=jokeProvider.jokeList[jokeProvider.jokeList.indexOf(widget.jokeModel) - 1];
+                                        widget.index = newIndex;
                                       }
                                       else{
                                         // jokeProvider.currentIndex = jokeProvider.jokeList.length;
@@ -107,13 +113,20 @@ class _JokeCardState extends State<JokeCard> {
                                       setState(() {
 
                                       });
-                                      final newIndex = jokeProvider.jokeList.indexOf(widget.jokeModel) + 1;
-                                      if (newIndex < jokeProvider.jokeList.length) {
-                                        jokeProvider.currentIndex = newIndex;
-                                        widget.jokeModel=jokeProvider.jokeList[jokeProvider.jokeList.indexOf(widget.jokeModel) + 1];
+                                      final newIndex = widget.index + 1;
+                                      int length;
+                                      if(widget.emoji=="") {
+                                        length = jokeProvider.jokeList.length;
+                                      }
+                                      else
+                                      {
+                                        length = jokeProvider.jokeListFav[widget.emoji]!.length;
+                                      }
+                                      if (newIndex < length) {
+                                        widget.index  = newIndex;
                                       }
                                       else{
-                                        jokeProvider.currentIndex = 0;
+                                        widget.index = 0;
                                       }
                                     },
                                     child: AppIcons.rightArrow)
@@ -234,10 +247,6 @@ class _JokeCardState extends State<JokeCard> {
             );
           }
       );
-    }
-          else {
-            return Container();
-          }
 
   }
 }
