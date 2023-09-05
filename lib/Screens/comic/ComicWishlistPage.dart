@@ -282,15 +282,16 @@ class _ComicWishlistPageState extends State<ComicWishlistPage> {
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: jokeProvider.jokeListFav.keys.length,
-                            itemBuilder: (context, index) {
-                              final emoji = jokeProvider.jokeListFav.keys.elementAt(index);
+                            itemBuilder: (context, ind) {
+                              final emoji = jokeProvider.jokeListFav.keys.elementAt(ind);
                               final emojiList=emoji.split(' ');
                               // final
                               return GestureDetector(
                                 onTap: () {
                                   setState(() {
                                     selectedEmoji = emoji;
-                                    selectedIndex=index;
+                                    index=0;
+                                    selectedIndex=ind;
                                     print(selectedEmoji);
                                   });
                                 },
@@ -308,7 +309,7 @@ class _ComicWishlistPageState extends State<ComicWishlistPage> {
                                         style: TextStyle(fontSize: 20),
                                       ),
                                       Visibility(
-                                        visible: selectedIndex==index,
+                                        visible: selectedIndex==ind,
                                         child: Consumer<ThemeProvider>(
                                             builder: (_,themeProvider,__) {
                                               return Text(
