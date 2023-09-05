@@ -112,7 +112,7 @@ class _WishlistPageState extends State<WishlistPage> {
                                   child: Container(
                                     height: 100,
                                     // width: 500,
-                                    child: Center(child: Text("Joke not found, \n    but we found your smile! 😄      ",style: themeProvider.selectedFont.copyWith(),textAlign: TextAlign.center,))),
+                                    child: Center(child: Text("Joke not found, \n    but we found your smile! 😄      ",style: themeProvider.selectedFont.copyWith(color: kdarkTextColor),textAlign: TextAlign.center,))),
                               ));
                             }
                           )

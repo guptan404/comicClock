@@ -159,6 +159,7 @@ String sunglassEmoImg="assets/emoji/sunglassEmoji.png";
 String thinkEmoImg="assets/emoji/thinkingEmoji.png";
 String pleadEmoImg="assets/emoji/pleadEmoji.png";
 String logo='assets/Logo.png';
+String page0Img='assets/comicBackground/page0.png';
 String page1Img='assets/comicBackground/page1.png';
 String page2Img='assets/comicBackground/page2.png';
 String page3Img='assets/comicBackground/page3.png';
@@ -170,6 +171,7 @@ String page8Img='assets/comicBackground/page8.png';
 String page9Img='assets/comicBackground/page9.png';
 String page10Img='assets/comicBackground/page10.png';
 String profilePageImg='assets/profilepage.png';
+String splash= 'assets/splash.png';
 String yellowRoundSpeech='assets/comicSpeech/yellowRoundSpeech.png';
 List<String> comicPages=[
   page1Img,

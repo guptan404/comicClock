@@ -2,6 +2,7 @@ import 'package:comic_clock/Providers/JokeProvider.dart';
 import 'package:comic_clock/Providers/ThemeProvider.dart';
 import 'package:comic_clock/Screens/cartoon/BottomBar.dart';
 import 'package:comic_clock/Screens/comic/ComicBottomBar.dart';
+import 'package:comic_clock/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Widgets/EmojiContainer.dart';
@@ -44,7 +45,16 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: loading?Center(
-        child: EmojiContainer(context, 'random',''),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(splash),
+              fit: BoxFit.cover
+            )
+          )
+        ),
       ):Consumer<ThemeProvider>(
         builder: (_,themeProvider, __) {
           return themeProvider.theme=="cartoon"?BottomBar():ComicBottomBar();

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:comic_clock/Providers/JokeProvider.dart';
+import 'package:comic_clock/Providers/ThemeProvider.dart';
 import 'package:comic_clock/Utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_flip/page_flip.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text_to_speech/text_to_speech.dart';
 
 import '../../Model/JokeModel.dart';
@@ -40,11 +42,16 @@ class _ComicHomePageState extends State<ComicHomePage> {
   Widget build(BuildContext context) {
     // print("index is: $index");
     int randomNumber = random.nextInt(9);
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    SharedPreferences.getInstance().then((value) => value.setBool("firstOpen", false));
     return  Scaffold(
       body: PageFlipWidget(
         key: _controller,
         index: index,
         children:[
+          Visibility(
+            visible: themeProvider.firstOpen,
+              child: Image.asset(page0Img)),
           for(int i=0;i<comicPages.length;i++)
             pages(i)
         ]

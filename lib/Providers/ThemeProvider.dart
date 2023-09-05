@@ -15,13 +15,19 @@ class ThemeProvider extends ChangeNotifier {
 
   String cf = "Roboto Flex";
   String theme = "cartoon";
+  bool firstOpen = true;
 
   Future<void> getFontFromSharedPrefrences()
   async {
-    // get font from shared prefrences
+    // add firstOpen to sharedPrefrences
     SharedPreferences sharedPreferences =  await SharedPreferences.getInstance();
     String? fontName = sharedPreferences.getString("font");
     String? themeName = sharedPreferences.getString("theme");
+    bool? firstOpen = sharedPreferences.getBool("firstOpen");
+    if(firstOpen != null)
+      {
+        this.firstOpen = firstOpen;
+      }
     if(themeName !=null)
       {
         theme = themeName;
